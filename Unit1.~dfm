@@ -1,9 +1,11 @@
 object Form1: TForm1
   Left = 192
   Top = 124
-  Width = 573
-  Height = 187
+  BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsSingle
   Caption = 'Legends of Equestria Launcher'
+  ClientHeight = 149
+  ClientWidth = 557
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -515,6 +517,7 @@ object Form1: TForm1
       6329F02A2929291D6329F02A2929291D6329F02A2929291D6329F02A2929291D
       6329F02A2929291D6329F02A2929291D6329F02A2929291D63FD7F1236E2ABCB
       67F0200000000049454E44AE426082}
+    OnClick = Image1Click
   end
   object GroupBox1: TGroupBox
     Left = 16
@@ -640,10 +643,77 @@ object Form1: TForm1
     object TabSheet2: TTabSheet
       Caption = 'Changelog'
       ImageIndex = 1
+      object WebBrowser1: TWebBrowser
+        Left = 0
+        Top = 0
+        Width = 401
+        Height = 102
+        TabOrder = 0
+        ControlData = {
+          4C000000722900008B0A00000000000000000000000000000000000000000000
+          000000004C000000000000000000000001000000E0D057007335CF11AE690800
+          2B2E126208000000000000004C0000000114020000000000C000000000000046
+          8000000000000000000000000000000000000000000000000000000000000000
+          00000000000000000100000000000000000000000000000000000000}
+      end
     end
     object TabSheet3: TTabSheet
       Caption = 'About'
       ImageIndex = 2
+      object Label4: TLabel
+        Left = 152
+        Top = 8
+        Width = 92
+        Height = 17
+        Caption = 'Developed by:'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object Label5: TLabel
+        Left = 48
+        Top = 24
+        Width = 306
+        Height = 24
+        Caption = 'William Rafael  Santos Bencke'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -21
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        OnClick = Label5Click
+      end
+      object Label6: TLabel
+        Left = 144
+        Top = 48
+        Width = 116
+        Height = 17
+        Caption = '(a.k.a Fire Speed)'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object Label7: TLabel
+        Left = 72
+        Top = 72
+        Width = 262
+        Height = 18
+        Caption = 'github.com/xfirespeed/LoE-Launcher'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        OnClick = Label7Click
+      end
     end
   end
   object XPManifest1: TXPManifest

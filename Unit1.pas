@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, XPMan, ComCtrls, pngimage, ExtCtrls, StdCtrls, IdBaseComponent,
   IdComponent, IdTCPConnection, IdTCPClient, IdHTTP, IdAntiFreezeBase,
-  IdAntiFreeze, DFUnRar, OleCtrls, SHDocVw;
+  IdAntiFreeze, DFUnRar, OleCtrls, SHDocVw, INIFiles, ShellAPI;
 
 type
   TForm1 = class(TForm)
@@ -32,6 +32,11 @@ type
     DFUnRar1: TDFUnRar;
     Edit1: TEdit;
     WebBrowser1: TWebBrowser;
+    TabSheet3: TTabSheet;
+    Label4: TLabel;
+    Label5: TLabel;
+    Label6: TLabel;
+    Label7: TLabel;
     procedure Button1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure IdHTTP1Work(Sender: TObject; AWorkMode: TWorkMode;
@@ -41,14 +46,25 @@ type
     procedure IdHTTP1WorkEnd(Sender: TObject; AWorkMode: TWorkMode);
     procedure Timer1Timer(Sender: TObject);
     procedure Timer2Timer(Sender: TObject);
+    procedure Image1Click(Sender: TObject);
+    procedure Label7Click(Sender: TObject);
+    procedure Label5Click(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
+    procedure JumpTo(const aAdress: String);
   end;
 
 var
   Form1: TForm1;
+  ArqIni: TIniFile;
+  ArqLang: TIniFIle;
+  Language, L1Caption01, L2Caption01, L3Caption01, L3Caption02, L3Caption03,
+  L3Caption04, L3Caption05, L3Caption06, L4Caption01, CTabSheet1, CTabSheet2,
+  CTabSheet3, B1Caption01 : string;
+  ServerName, Version, Website, ChangeLogURL, UpdateURL, ExeFile : string;
+  PExeFile : PChar;
 
 implementation
 
@@ -56,13 +72,52 @@ implementation
 
 procedure TForm1.Button1Click(Sender: TObject);
 begin
-WinExec('loe.exe', SW_NORMAL);
+WinExec(PAnsiChar(ExeFile), SW_NORMAL);
 close;
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
+ArqLang := TIniFile.Create(ExtractFilePath(Application.ExeName) + 'language.lang');
+Language := ArqLang.ReadString('Language', 'Language', '');
+L1Caption01 := ArqLang.ReadString('Label1', 'Caption01', '');
+L2Caption01 := ArqLang.ReadString('Label2', 'Caption01', '');
+L3Caption01 := ArqLang.ReadString('Label3', 'Caption01', '');
+L3Caption02 := ArqLang.ReadString('Label3', 'Caption02', '');
+L3Caption03 := ArqLang.ReadString('Label3', 'Caption03', '');
+L3Caption04 := ArqLang.ReadString('Label3', 'Caption04', '');
+L3Caption05 := ArqLang.ReadString('Label3', 'Caption05', '');
+L3Caption06 := ArqLang.ReadString('Label3', 'Caption06', '');
+L4Caption01 := ArqLang.ReadString('Label4', 'Caption01', '');
+CTabSheet1 := ArqLang.ReadString('PageControl1', 'TabSheet1', '');
+CTabSheet2 := ArqLang.ReadString('PageControl1', 'TabSheet2', '');
+CTabSheet3 := ArqLang.ReadString('PageControl1', 'TabSheet3', '');
+B1Caption01 := ArqLang.ReadString('Button1', 'Caption01', '');
+// -------------------------------
+Label1.Caption := L1Caption01;
+Label2.Caption := L2Caption01;
+Label3.Caption := L3Caption01;
+Label4.Caption := L4Caption01;
+TabSheet1.Caption := CTabSheet1;
+TabSheet2.Caption := CTabSheet2;
+TabSheet3.Caption := CTabSheet3;
+Button1.Caption := B1Caption01;
+// -------------------------------
 Button1.Enabled := False;
+// -------------------------------
+ArqIni := TIniFile.Create(ExtractFilePath(Application.ExeName) + 'config.ini');
+ServerName := ArqIni.ReadString('Configs', 'ServerName', '');
+Version := ArqIni.ReadString('Configs', 'Version', '');
+Website := ArqIni.ReadString('Configs', 'Website', '');
+ChangeLogURL := ArqIni.ReadString('Configs', 'ChangelogURL', '');
+UpdateURL := ArqIni.ReadString('Configs', 'UpdateURL', '');
+ExeFile := ArqIni.ReadString('Launch', 'ExeFile', '');
+// --------------------------------
+Form1.Caption := Form1.Caption + ' [' + ServerName + ']';
+Label1.Caption := Label1.Caption + ' ' + ServerName;
+Label2.Caption := Label2.Caption + ' ' + Version;
+WebBrowser1.Navigate(ChangeLogURL);
+// --------------------------------
 end;
 
 procedure TForm1.IdHTTP1Work(Sender: TObject; AWorkMode: TWorkMode;
@@ -76,25 +131,24 @@ procedure TForm1.IdHTTP1WorkBegin(Sender: TObject; AWorkMode: TWorkMode;
 begin
 ProgressBar1.Position := 0;
 ProgressBar1.Max := AWorkCountMax;
-Label3.Caption := 'Checking for updates...';
+Label3.Caption := L3Caption02;
 end;
 
 procedure TForm1.IdHTTP1WorkEnd(Sender: TObject; AWorkMode: TWorkMode);
 begin
 ProgressBar1.Position := ProgressBar1.Max;
-Label3.Caption := 'Update completed!';
+Label3.Caption := L3Caption03;
 end;
 
 procedure TForm1.Timer1Timer(Sender: TObject);
 var
-archive, server : string;
+archive : string;
 MyFile: TFileStream;
 begin
-server := 'http://loebr.cf/launcher/';
 archive := 'currentversion.ini';
 MyFile := TFileStream.Create('currentversion.ini', fmCreate);
 try
-IdHTTP1.Get(server + archive, MyFile);
+IdHTTP1.Get(UpdateURL + archive, MyFile);
 finally
 MyFile.Free;
 memo2.Lines.LoadFromFile('currentversion.ini');
@@ -102,23 +156,23 @@ memo3.Lines.LoadFromFile('version.ini');
 if memo2.Lines[0] = memo3.Lines[0] then
 begin
 button1.Enabled := true;
-Label3.Caption := 'You have the latest version!';
+Label3.Caption := L3Caption04;
 if (fileexists('currentversion.ini')) then
 deletefile('currentversion.ini');
 end else begin
 archive := 'update.ini';
 MyFile := TFileStream.Create('update.ini', fmCreate);
 try
-IdHTTP1.Get(server + archive, MyFile);
+IdHTTP1.Get(UpdateURL + archive, MyFile);
 finally
 MyFile.Free;
 memo1.Lines.LoadFromFile('update.ini');
 end;
-Label3.Caption := 'Downloading: ' + memo1.Lines[0];
+Label3.Caption := L3Caption05 + ' ' + memo1.Lines[0];
 archive := memo1.Lines[0];
 MyFile := TFileStream.Create(memo1.Lines[0], fmCreate);
 try
-IdHTTP1.Get(server + archive, MyFile);
+IdHTTP1.Get(UpdateURL + archive, MyFile);
 finally
 MyFile.Free;
 end;
@@ -128,7 +182,6 @@ if (fileexists('currentversion.ini')) then
 deletefile('currentversion.ini');
 if (fileexists('update.ini')) then
 deletefile('update.ini');
-//Label3.Caption := 'Update completed!';
 end;
 end;
 Button1.Enabled := true;
@@ -144,13 +197,36 @@ DFUnRAR1.FileName := Memo1.Lines[0];
 if not FileExists(DFUnRAR1.FileName) then begin
 Exit;
 end else begin
-label3.Caption :=  'Updating the game...';
+label3.Caption :=  L3Caption06;
 DFUnRAR1.Extract;
-Label3.Caption := 'Update completed!';
+Label3.Caption := L3Caption03;
 end;
 if FileExists(Memo1.Lines[0]) then
 deletefile(Memo1.Lines[0]);
 Timer2.Enabled := False;
+end;
+
+procedure TForm1.Image1Click(Sender: TObject);
+begin
+ JumpTo(Website);
+end;
+
+procedure TForm1.JumpTo(const aAdress: String); 
+var 
+       buffer: String; 
+begin 
+       buffer := aAdress;
+       ShellExecute(Application.Handle, nil, PChar(buffer), nil, nil, SW_SHOWNORMAL); 
+end;
+
+procedure TForm1.Label7Click(Sender: TObject);
+begin
+ JumpTo('http://github.com/xfirespeed/LoE-Launcher');
+end;
+
+procedure TForm1.Label5Click(Sender: TObject);
+begin
+  JumpTo('https://github.com/xfirespeed');
 end;
 
 end.

@@ -2,7 +2,7 @@ object Form1: TForm1
   Left = 192
   Top = 124
   Width = 573
-  Height = 186
+  Height = 187
   Caption = 'Legends of Equestria Launcher'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -563,6 +563,14 @@ object Form1: TForm1
     Caption = 'Components'
     TabOrder = 1
     Visible = False
+    object Edit1: TEdit
+      Left = 8
+      Top = 96
+      Width = 225
+      Height = 21
+      TabOrder = 0
+      Visible = False
+    end
   end
   object PageControl1: TPageControl
     Left = 136
@@ -669,6 +677,21 @@ object Form1: TForm1
   end
   object IdAntiFreeze1: TIdAntiFreeze
     Left = 384
+    Top = 176
+  end
+  object Timer2: TTimer
+    OnTimer = Timer2Timer
+    Left = 416
+    Top = 176
+  end
+  object DFUnRar1: TDFUnRar
+    CanProgress = False
+    Mode = DFRAR_EXTRACT
+    OverrideEvent = OR_ALWAYS
+    PromptForPass = False
+    PromptForVolumn = False
+    StopProcessing = False
+    Left = 448
     Top = 176
   end
 end

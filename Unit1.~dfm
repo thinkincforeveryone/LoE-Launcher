@@ -2,7 +2,7 @@ object Form1: TForm1
   Left = 192
   Top = 124
   Width = 573
-  Height = 186
+  Height = 187
   Caption = 'Legends of Equestria Launcher'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -11,7 +11,6 @@ object Form1: TForm1
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
-  OnClose = FormClose
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
@@ -670,6 +669,10 @@ object Form1: TForm1
   end
   object IdAntiFreeze1: TIdAntiFreeze
     Left = 384
+    Top = 176
+  end
+  object Timer2: TTimer
+    Left = 416
     Top = 176
   end
 end

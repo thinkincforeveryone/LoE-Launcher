@@ -72,27 +72,12 @@ implementation
 
 procedure TForm1.Button1Click(Sender: TObject);
 begin
-StrPCopy(PExeFile,ExeFile);
-WinExec(PExeFile, SW_NORMAL);
+WinExec(PAnsiChar(ExeFile), SW_NORMAL);
 close;
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
-ArqIni := TIniFile.Create(ExtractFilePath(Application.ExeName) + 'config.ini');
-ServerName := ArqIni.ReadString('Configs', 'ServerName', '');
-Version := ArqIni.ReadString('Configs', 'Version', '');
-Website := ArqIni.ReadString('Configs', 'Website', '');
-ChangeLogURL := ArqIni.ReadString('Configs', 'ChangelogURL', '');
-UpdateURL := ArqIni.ReadString('Configs', 'UpdateURL', '');
-ExeFile := ArqIni.ReadString('Launch', 'ExeFile', '');
-// --------------------------------
-Form1.Caption := Form1.Caption + ' [' + ServerName + ']';
-Label1.Caption := Label1.Caption + ' ' + ServerName;
-Label2.Caption := Label2.Caption + ' ' + Version;
-WebBrowser1.Navigate(ChangeLogURL);
-// --------------------------------
-Button1.Enabled := False;
 ArqLang := TIniFile.Create(ExtractFilePath(Application.ExeName) + 'language.lang');
 Language := ArqLang.ReadString('Language', 'Language', '');
 L1Caption01 := ArqLang.ReadString('Label1', 'Caption01', '');
@@ -118,6 +103,21 @@ TabSheet2.Caption := CTabSheet2;
 TabSheet3.Caption := CTabSheet3;
 Button1.Caption := B1Caption01;
 // -------------------------------
+Button1.Enabled := False;
+// -------------------------------
+ArqIni := TIniFile.Create(ExtractFilePath(Application.ExeName) + 'config.ini');
+ServerName := ArqIni.ReadString('Configs', 'ServerName', '');
+Version := ArqIni.ReadString('Configs', 'Version', '');
+Website := ArqIni.ReadString('Configs', 'Website', '');
+ChangeLogURL := ArqIni.ReadString('Configs', 'ChangelogURL', '');
+UpdateURL := ArqIni.ReadString('Configs', 'UpdateURL', '');
+ExeFile := ArqIni.ReadString('Launch', 'ExeFile', '');
+// --------------------------------
+Form1.Caption := Form1.Caption + ' [' + ServerName + ']';
+Label1.Caption := Label1.Caption + ' ' + ServerName;
+Label2.Caption := Label2.Caption + ' ' + Version;
+WebBrowser1.Navigate(ChangeLogURL);
+// --------------------------------
 end;
 
 procedure TForm1.IdHTTP1Work(Sender: TObject; AWorkMode: TWorkMode;

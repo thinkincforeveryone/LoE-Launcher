@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, XPMan, ComCtrls, pngimage, ExtCtrls, StdCtrls, IdBaseComponent,
   IdComponent, IdTCPConnection, IdTCPClient, IdHTTP, IdAntiFreezeBase,
-  IdAntiFreeze, DFUnRar;
+  IdAntiFreeze, DFUnRar, OleCtrls, SHDocVw;
 
 type
   TForm1 = class(TForm)
@@ -22,7 +22,6 @@ type
     PageControl1: TPageControl;
     TabSheet1: TTabSheet;
     TabSheet2: TTabSheet;
-    TabSheet3: TTabSheet;
     Label1: TLabel;
     Label2: TLabel;
     Label3: TLabel;
@@ -32,6 +31,7 @@ type
     Timer2: TTimer;
     DFUnRar1: TDFUnRar;
     Edit1: TEdit;
+    WebBrowser1: TWebBrowser;
     procedure Button1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure IdHTTP1Work(Sender: TObject; AWorkMode: TWorkMode;

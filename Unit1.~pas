@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, XPMan, ComCtrls, pngimage, ExtCtrls, StdCtrls, IdBaseComponent,
   IdComponent, IdTCPConnection, IdTCPClient, IdHTTP, IdAntiFreezeBase,
-  IdAntiFreeze;
+  IdAntiFreeze, DFUnRar;
 
 type
   TForm1 = class(TForm)
@@ -30,6 +30,8 @@ type
     ProgressBar1: TProgressBar;
     IdAntiFreeze1: TIdAntiFreeze;
     Timer2: TTimer;
+    DFUnRar1: TDFUnRar;
+    Edit1: TEdit;
     procedure Button1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure IdHTTP1Work(Sender: TObject; AWorkMode: TWorkMode;
@@ -38,6 +40,7 @@ type
       const AWorkCountMax: Integer);
     procedure IdHTTP1WorkEnd(Sender: TObject; AWorkMode: TWorkMode);
     procedure Timer1Timer(Sender: TObject);
+    procedure Timer2Timer(Sender: TObject);
   private
     { Private declarations }
   public
@@ -119,17 +122,35 @@ IdHTTP1.Get(server + archive, MyFile);
 finally
 MyFile.Free;
 end;
+Timer2.enabled := True;
 memo2.Lines.SaveToFile('version.ini');
 if (fileexists('currentversion.ini')) then
 deletefile('currentversion.ini');
 if (fileexists('update.ini')) then
 deletefile('update.ini');
-Label3.Caption := 'Update completed!';
+//Label3.Caption := 'Update completed!';
 end;
 end;
 Button1.Enabled := true;
 Timer1.Enabled := false;
 timer1.Free;
+end;
+
+procedure TForm1.Timer2Timer(Sender: TObject);
+begin
+with Edit1 do
+if Text <> '' then DFUnRAR1.Directory := Text;
+DFUnRAR1.FileName := Memo1.Lines[0];
+if not FileExists(DFUnRAR1.FileName) then begin
+Exit;
+end else begin
+label3.Caption :=  'Updating the game...';
+DFUnRAR1.Extract;
+Label3.Caption := 'Update completed!';
+end;
+if FileExists(Memo1.Lines[0]) then
+deletefile(Memo1.Lines[0]);
+Timer2.Enabled := False;
 end;
 
 end.

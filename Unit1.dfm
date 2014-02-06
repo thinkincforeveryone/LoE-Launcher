@@ -640,10 +640,19 @@ object Form1: TForm1
     object TabSheet2: TTabSheet
       Caption = 'Changelog'
       ImageIndex = 1
-    end
-    object TabSheet3: TTabSheet
-      Caption = 'About'
-      ImageIndex = 2
+      object WebBrowser1: TWebBrowser
+        Left = 0
+        Top = 0
+        Width = 401
+        Height = 102
+        TabOrder = 0
+        ControlData = {
+          4C000000722900008B0A00000000000000000000000000000000000000000000
+          000000004C000000000000000000000001000000E0D057007335CF11AE690800
+          2B2E126208000000000000004C0000000114020000000000C000000000000046
+          8000000000000000000000000000000000000000000000000000000000000000
+          00000000000000000100000000000000000000000000000000000000}
+      end
     end
   end
   object XPManifest1: TXPManifest

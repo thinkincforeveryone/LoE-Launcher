@@ -217,6 +217,7 @@ end;
 Timer2.enabled := True;
 memo2.Lines.SaveToFile('version.ini');
 ArqIni.WriteString('Configs', 'Version', memo2.Lines[0]);
+Label2.Caption := L2Caption01 + ' ' +  memo2.Lines[0];
 if (fileexists('currentversion.ini')) then
 deletefile('currentversion.ini');
 if (fileexists('update.ini')) then

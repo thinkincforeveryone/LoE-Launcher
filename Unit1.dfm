@@ -1,6 +1,6 @@
 object Form1: TForm1
-  Left = 192
-  Top = 124
+  Left = 384
+  Top = 266
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Legends of Equestria Launcher'

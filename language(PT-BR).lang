@@ -1,0 +1,28 @@
+[Language]
+Language=Português
+
+[Label1]
+Caption01=Server:
+
+[Label2]
+Caption01=Versão atual:
+
+[Label3]
+Caption01=Procurando atualizações...
+Caption02=Checando atualizações...
+Caption03=Atualização concluida!
+Caption04=Seu jogo já está atualizado!
+Caption05=Baixando:
+Caption06=Atualizando o jogo...
+
+[Label4]
+Caption01=Desenvolvido por:
+
+[PageControl1]
+TabSheet1=Inicio
+TabSheet2=Changelog
+TabSheet3=Sobre
+
+[Button1]
+Caption01=Jogar
+

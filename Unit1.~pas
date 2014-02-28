@@ -183,8 +183,9 @@ var
 archive : string;
 MyFile: TFileStream;
 begin
+Timer1.Enabled := False;
 archive := 'currentversion.ini';
-MyFile := TFileStream.Create('currentversion.ini', fmCreate);
+MyFile := TFileStream.Create(archive, fmCreate);
 try
 IdHTTP1.Get(UpdateURL + archive, MyFile);
 finally
@@ -199,7 +200,7 @@ if (fileexists('currentversion.ini')) then
 deletefile('currentversion.ini');
 end else begin
 archive := 'update.ini';
-MyFile := TFileStream.Create('update.ini', fmCreate);
+MyFile := TFileStream.Create(archive, fmCreate);
 try
 IdHTTP1.Get(UpdateURL + archive, MyFile);
 finally
@@ -208,25 +209,19 @@ memo1.Lines.LoadFromFile('update.ini');
 end;
 Label3.Caption := L3Caption05 + ' ' + memo1.Lines[0];
 archive := memo1.Lines[0];
-MyFile := TFileStream.Create(memo1.Lines[0], fmCreate);
+MyFile := TFileStream.Create(archive, fmCreate);
 try
 IdHTTP1.Get(UpdateURL + archive, MyFile);
 finally
 MyFile.Free;
-end;
 Timer2.enabled := True;
-memo2.Lines.SaveToFile('version.ini');
-ArqIni.WriteString('Configs', 'Version', memo2.Lines[0]);
-Label2.Caption := L2Caption01 + ' ' +  memo2.Lines[0];
+end;
 if (fileexists('currentversion.ini')) then
 deletefile('currentversion.ini');
 if (fileexists('update.ini')) then
 deletefile('update.ini');
 end;
 end;
-Button1.Enabled := true;
-Timer1.Enabled := false;
-timer1.Free;
 end;
 
 procedure TForm1.Timer2Timer(Sender: TObject);
@@ -240,6 +235,10 @@ end else begin
 label3.Caption :=  L3Caption06;
 DFUnRAR1.Extract;
 Label3.Caption := L3Caption03;
+memo2.Lines.SaveToFile('version.ini');
+ArqIni.WriteString('Configs', 'Version', memo2.Lines[0]);
+Label2.Caption := L2Caption01 + ' ' +  memo2.Lines[0];
+Button1.Enabled := true;
 end;
 if FileExists(Memo1.Lines[0]) then
 deletefile(Memo1.Lines[0]);

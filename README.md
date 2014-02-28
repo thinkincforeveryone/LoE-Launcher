@@ -15,18 +15,21 @@ Extract in the Legends of Equestria folder, start Launcher.exe and the launcher 
 
 2- Then, go in the launcher folder and open the config.ini file with the notepad
 
-[Configs]
+[Configs]<p>
 ServerName=Here is the Server Name (The launcher will show this name everywhere)[Ex: LoeBR]
 
-Version=Here is the version of the files (The launcher will compare this version number with the version number on the web server, if they are different, the launcher will update the game)[Ex: v1.0]
+Version=Here is the version of the files (The launcher will compare this version number with the version number on the web server, if they are different, the launcher will update the game) [Ex: v1.0]
 
-Website=Here is your website (The launcher will open this website by clicking on the image on the launcher)[Ex: http://loebr.cf/]
+Website=Here is your website (The launcher will open this website by clicking on the image on the launcher)<p>
+[Ex: http://loebr.cf/]
 
-ChangelogURL=Here is the Changelog URL (The launcher will open this link on the second tab) [Ex: http://loebr.cf/launcher/changelog.html]
+ChangelogURL=Here is the Changelog URL (The launcher will open this link on the second tab) <p>
+[Ex: http://loebr.cf/launcher/changelog.html]
 
-UpdateURL=Here is the update URL (Here is where the launcher will search for the update, here you will put the link for the "launcher" folder on you web server)[Ex: http://loebr.cf/launcher/]
+UpdateURL=Here is the update URL (Here is where the launcher will search for the update, here you will put the link for the "launcher" folder on you web server)<p>
+[Ex: http://loebr.cf/launcher/]
 
-[Launch]
+[Launch]<p>
 ExeFile=Here is the executable file that will run by clicking on the play button [Ex: loe.exe]
 
 3- Save all, and done!

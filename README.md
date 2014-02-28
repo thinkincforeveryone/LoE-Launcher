@@ -40,4 +40,4 @@ Basically, when you open the launcher, it will connect to the web server and dow
 
 <h3>Screenshot</h3>
 
-<img src="https://www.dropbox.com/s/3kmg4e1fv9yuadz/ss.png"/>
+<img src="https://dl.dropboxusercontent.com/s/3kmg4e1fv9yuadz/ss.png"/>
